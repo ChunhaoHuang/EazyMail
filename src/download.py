@@ -1,4 +1,4 @@
-import imaplib, email, getpass, modified_utf7, os
+import imaplib, email, getpass, modified_utf7, os, re
 from email.header import decode_header
 
 imap_server = 'imap.exmail.qq.com'
@@ -45,9 +45,11 @@ with imaplib.IMAP4_SSL(imap_server) as server:
                     filename = filename.decode(filename_charset)
                 while filename[-4:] == '.pdf':
                     filename = filename[:-4]
-                if len(filename) < 2 or filename[-2] != 'A':
+                match = re.match(r'(.*)(A)(\d+)', filename)
+                if match is None:
                     continue
-                save_path_w = save_path + '\\A' + filename[-1]
+                n = match.groups()[2]
+                save_path_w = save_path + '\\A' + n
                 filename += '.pdf'
                 # Save the attachment to a file
                 if not os.path.exists(save_path_w):

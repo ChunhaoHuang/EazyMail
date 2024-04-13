@@ -21,7 +21,7 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     for filename in listdir(attachment_folder):
         file_full_path = join(attachment_folder, filename)
         if isfile(file_full_path) and filename[-4:] == '.pdf':
-            match = re.match(r'([\u4e00-\u9fa5]+)(\d+)(A)(\d)(\.pdf)', filename)
+            match = re.match(r'([\u4e00-\u9fa5]+)(\d+)(A)(\d+)(\.pdf)', filename)
             if match is None:
                 continue
             student_name, student_id, _, assignment_id, _ = match.groups()
